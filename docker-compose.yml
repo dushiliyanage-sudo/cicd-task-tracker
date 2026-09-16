@@ -1,0 +1,6 @@
+services:
+  task-tracker:
+    build: .
+    container_name: cicd-task-tracker-compose
+    ports:
+      - "5000:5000"
