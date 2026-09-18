@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}My Trips{% endblock %}
+{% block content %}
+<section class="page-hero planner-hero">
+    <div class="container page-hero-inner">
+        <div>
+            <span class="eyebrow">Your travel board</span>
+            <h1>Turn plans into <em>memories.</em></h1>
+            <p>Save your dream destinations, dates and ideas in one beautiful place. Add a trip today and build your next escape.</p>
+        </div>
+        <div class="mini-stats">
+            <div><strong>{{ trips|length }}</strong><span>Saved trips</span></div>
+            <div><strong>✈</strong><span>Ready to explore</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="container planner">
+    <div class="form-card planner-form">
+        <div class="card-icon">✈️</div>
+        <span class="section-kicker">Create itinerary</span>
+        <h2>Plan a new trip</h2>
+        <p>Choose where you want to go, pick a date, and add a note for your adventure.</p>
+        <form method="POST" action="{{ url_for('plan_trip') }}">
+            <label for="destination">Destination</label>
+            <div class="input-wrap"><span>📍</span><input id="destination" name="destination" placeholder="e.g. Ella, Sri Lanka" required></div>
+            <label for="date">Travel date</label>
+            <div class="input-wrap"><span>📅</span><input id="date" name="date" type="date" required></div>
+            <label for="note">Trip note</label>
+            <textarea id="note" name="note" placeholder="Places to visit, food to try, things to remember..." maxlength="180"></textarea>
+            <button class="btn btn-primary save-btn" type="submit">Save trip <span>→</span></button>
+        </form>
+    </div>
+
+    <div class="itinerary-card">
+        <div class="board-heading">
+            <div><span class="section-kicker">Saved journeys</span><h2>My travel plans</h2></div>
+            <span class="count-pill">{{ trips|length }} {{ 'trip' if trips|length == 1 else 'trips' }}</span>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}<div class="flash">✓ {{ message }}</div>{% endfor %}
+          {% endif %}
+        {% endwith %}
+        <div class="trip-list">
+            {% for trip in trips %}
+            <article class="trip-card">
+                <div class="trip-thumb"><span>✈</span></div>
+                <div class="trip-main">
+                    <div class="trip-top"><span class="trip-label">UPCOMING ADVENTURE</span><span class="trip-date">{{ trip.date }}</span></div>
+                    <h3>{{ trip.destination }}</h3>
+                    <p>{{ trip.note }}</p>
+                </div>
+                <form method="POST" action="{{ url_for('delete_trip', trip_id=trip.id) }}" onsubmit="return confirm('Delete this trip?');">
+                    <button class="delete-btn" type="submit" aria-label="Delete {{ trip.destination }}">🗑</button>
+                </form>
+            </article>
+            {% else %}
+            <div class="empty-state"><div>🧳</div><h3>No trips saved yet</h3><p>Your next adventure starts here. Add your first trip using the form.</p></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

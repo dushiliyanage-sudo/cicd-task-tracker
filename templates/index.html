@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div>
+            <span class="eyebrow">Your next chapter starts here</span>
+            <h1>Go somewhere <em>beautiful.</em></h1>
+            <p class="hero-copy">Wanderly helps you discover unforgettable places and turn inspiration into a simple, personal travel plan.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="{{ url_for('destination_page') }}">Explore destinations ↗</a>
+                <a class="btn btn-secondary" href="{{ url_for('plan_trip') }}">Plan my trip</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img class="hero-image" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=90" alt="Mountain landscape and lake">
+            <div class="float-card">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85" alt="Traveler enjoying a scenic view">
+                <small>Featured escape</small>
+                <strong>Find your horizon</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <div><span class="section-kicker">Explore the world</span><h2>Places worth packing for.</h2></div>
+            <p>From slow island mornings to energetic city nights, save a destination and start shaping your next adventure.</p>
+        </div>
+        <div class="destination-grid">
+            {% for destination in destinations[:3] %}
+            <a class="destination-card" href="{{ url_for('plan_trip') }}">
+                <img src="{{ destination.image }}" alt="{{ destination.name }}">
+                <div class="destination-overlay"><span>{{ destination.country }}</span><h3>{{ destination.name }}</h3><p>{{ destination.tag }} · Plan your trip →</p></div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section video-section">
+    <div class="container video-layout">
+        <div>
+            <span class="section-kicker">Travel inspiration</span>
+            <h2>See the world before you pack.</h2>
+            <p>Get inspired by cinematic travel footage, then use Wanderly to turn that feeling into a real itinerary.</p>
+            <a class="btn" style="color:white;border-color:rgba(255,255,255,.35);margin-top:10px" href="{{ url_for('destination_page') }}">Discover more places ↗</a>
+        </div>
+        <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/r45SDlI0vTs" title="Travel inspiration video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+
+<section class="section trip-preview">
+    <div class="container">
+        <div class="section-head">
+            <div><span class="section-kicker">Your plans</span><h2>Trips on your horizon.</h2></div>
+            <a class="btn btn-primary" href="{{ url_for('plan_trip') }}">+ Add a trip</a>
+        </div>
+        <div class="trip-list">
+            {% for trip in trips[:3] %}
+            <div class="trip-item"><div><h3>{{ trip.destination }}</h3><p>{{ trip.note }}</p></div><span class="trip-date">{{ trip.date }}</span></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

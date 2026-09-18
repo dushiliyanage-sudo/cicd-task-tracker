@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wanderly{% endblock %} · Travel Planner</title>
+    <meta name="description" content="Wanderly is a beautiful travel planner for discovering destinations and planning your next adventure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="nav-wrap">
+        <nav class="navbar container">
+            <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">✦</span> wanderly</a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('destination_page') }}" class="{% if request.endpoint == 'destination_page' %}active{% endif %}">Destinations</a>
+                <a href="{{ url_for('plan_trip') }}" class="{% if request.endpoint == 'plan_trip' %}active{% endif %}">My Trips</a>
+            </div>
+            <a class="nav-cta" href="{{ url_for('plan_trip') }}">Plan a trip <span>↗</span></a>
+        </nav>
+    </header>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <a class="brand footer-brand" href="{{ url_for('home') }}"><span class="brand-mark">✦</span> wanderly</a>
+                <p>Collect moments, not miles. Plan beautiful journeys with ease.</p>
+            </div>
+            <div class="footer-links">
+                <a href="{{ url_for('destination_page') }}">Explore</a>
+                <a href="{{ url_for('plan_trip') }}">My Trips</a>
+                <a href="{{ url_for('health') }}">System Health</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">© 2026 Wanderly · Built with Flask & Docker</div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+services:
+  wanderly:
+    build: .
+    container_name: wanderly-travel-planner-compose
+    ports:
+      - "5000:5000"

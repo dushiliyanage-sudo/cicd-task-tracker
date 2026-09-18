@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Destinations{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Curated escapes</span>
+        <h1>Where will you <em>go next?</em></h1>
+        <p>Browse a few dream-worthy destinations. Pick one that speaks to you, then add it to your personal trip plan.</p>
+    </div>
+</section>
+<section class="section" style="padding-top:10px">
+    <div class="container">
+        <div class="destination-grid">
+            {% for destination in destinations %}
+            <a class="destination-card" href="{{ url_for('plan_trip') }}">
+                <img src="{{ destination.image }}" alt="{{ destination.name }}">
+                <div class="destination-overlay"><span>{{ destination.country }}</span><h3>{{ destination.name }}</h3><p>{{ destination.tag }} · Add to my trips →</p>{% if destination.name == "Ella" %}<small class="image-credit">Photo: Bcd4e6 / Wikimedia Commons</small>{% endif %}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
