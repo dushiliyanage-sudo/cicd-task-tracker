@@ -33,6 +33,7 @@ jobs:
   docker:
     name: Build and Push Docker Image
     needs: test
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -50,4 +51,22 @@ jobs:
         with:
           context: .
           push: true
-          tags: dushiliyanage/cicd-wanderly:latest
+          tags: dushiliyanage/wanderly-travel-planner:latest
+
+  deploy:
+    name: Deploy to Local Computer
+    needs: docker
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Pull latest Docker image
+        run: docker compose pull
+
+      - name: Deploy updated application
+        run: docker compose up -d --remove-orphans
+
+      - name: Verify deployment
+        run: docker compose ps

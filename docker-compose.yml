@@ -1,6 +1,7 @@
 services:
   wanderly:
-    build: .
+    image: dushiliyanage/wanderly-travel-planner:latest
     container_name: wanderly-travel-planner-compose
     ports:
       - "5000:5000"
+    restart: unless-stopped
